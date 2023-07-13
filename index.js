@@ -105,7 +105,6 @@ class Fn {
                 function createContext() {
 
                     return async () => {
-                        log('run context', i)
                         result = await modFunc.apply(scope, args);
                         myCache.set(cacheKey, result, ttl);
                         return result;
