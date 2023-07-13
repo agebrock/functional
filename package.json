@@ -1,11 +1,10 @@
 {
   "name": "@agebrock/functional",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "chache result of any function call",
-  "types": "index.d.ts",
   "main": "index.js",
   "scripts": {
-   "test": "node --test"
+    "test": "node --test"
   },
   "author": "christoph.hagenbrock@googlemail.com",
   "license": "ISC",

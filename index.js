@@ -1,5 +1,5 @@
-import NodeCache from "node-cache";
-import debug from 'debug';
+const NodeCache = require("node-cache");
+const debug = require('debug');
 const myCache = new NodeCache({ stdTTL: 60 * 30, checkperiod: 120 });
 const log = debug('cache-fn');
 let cacheCounter = 0;
@@ -21,16 +21,16 @@ class Fn {
          */
         //this.executionContextCollection = new Map();
     }
-    clearInterval(){
+    clearInterval() {
         this.intervalCollection.forEach(interval => {
             clearInterval(interval);
         });
     }
     retry(retry) {
-        if (!retry){
+        if (!retry) {
             log('skip retry');
             return this.func;
-        } 
+        }
         const self = this;
         return function () {
             let result;
@@ -102,9 +102,9 @@ class Fn {
             return async function () {
                 let { args, cacheKey, result } = validate(arguments);
 
-                function createContext(){
-                   
-                    return async ()=>{
+                function createContext() {
+
+                    return async () => {
                         log('run context', i)
                         result = await modFunc.apply(scope, args);
                         myCache.set(cacheKey, result, ttl);
@@ -112,7 +112,7 @@ class Fn {
                     }
                 }
                 const context = createContext();
-               // self.executionContextCollection.set(cacheKey, context);
+                // self.executionContextCollection.set(cacheKey, context);
                 if (result === undefined) {
                     result = await modFunc.apply(scope, args);
                     if (refreshInterval) {
@@ -134,8 +134,8 @@ class Fn {
             return function () {
                 let { args, cacheKey, result } = validate(arguments);
 
-                function createContext(){
-                    return ()=>{
+                function createContext() {
+                    return () => {
                         log('run context')
                         result = modFunc.apply(scope, args);
                         myCache.set(cacheKey, result, ttl);
@@ -143,7 +143,7 @@ class Fn {
                     }
                 }
                 const context = createContext();
-               // self.executionContextCollection.set(cacheKey, context);
+                // self.executionContextCollection.set(cacheKey, context);
                 if (result === undefined) {
                     result = modFunc.apply(scope, args);
                     if (refreshInterval) {
@@ -164,22 +164,22 @@ class Fn {
 
 
 
-function retry({scope = null, func, retry}) {
-    const f =  fn(scope, func);
-    if(f.isAsync){
+function retry({ scope = null, func, retry }) {
+    const f = fn(scope, func);
+    if (f.isAsync) {
         return f.retryAsync(retry);
-    }else{
+    } else {
         return f.retry(retry);
     }
-    
+
 }
 
-function fn({scope, func, ttl = 0, refreshInterval=0, retry=0, out = {}}) {
-    const fn =  new Fn(scope, func);
+function fn({ scope, func, ttl = 0, refreshInterval = 0, retry = 0, out = {} }) {
+    const fn = new Fn(scope, func);
     out.fn = fn;
     return fn.cache(ttl, refreshInterval, retry);
 }
 
 
 
-export { fn };
+exports.fn = fn

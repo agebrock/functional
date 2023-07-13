@@ -1,6 +1,6 @@
-import test from 'node:test';
-import { strict as assert } from 'node:assert';
-import { fn } from '../index.js';
+const assert = require('node:assert');
+const { mock, test } = require('node:test');
+const fn = require('../index').fn;
 
 test('async retry', async (t) => {
     let i = 0;
