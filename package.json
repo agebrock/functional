@@ -3,6 +3,7 @@
   "version": "1.0.2",
   "description": "chache result of any function call",
   "main": "index.js",
+  "registry": "https://registry.npmjs.org/",
   "keywords": [
     "cache",
     "function"
