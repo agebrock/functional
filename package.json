@@ -1,8 +1,12 @@
 {
-  "name": "@agebrock/functional",
+  "name": "agebrock-functional",
   "version": "1.0.2",
   "description": "chache result of any function call",
   "main": "index.js",
+  "keywords": [
+    "cache",
+    "function"
+  ],
   "scripts": {
     "test": "node --test"
   },
